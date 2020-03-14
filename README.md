@@ -8,9 +8,9 @@ The hook will be automatically added when you load this package.
 
 ## Installation
 
-### Disclaimer
+### Important: verify PATH before installation
 
-For ssh and related commands (such as Git, used by Magit) to work with ssh-ident inside Emacs, the ssh command that Emacs runs should be pointing to an instance of ssh-ident. For instance, you can create a symlink from ssh to ssh-ident in `~/.local/bin`, and then add that path to the Emacs environment PATH variable:
+For ssh and related commands (such as Git, used by Magit) to work with ssh-ident inside Emacs, the ssh command that Emacs runs should be pointing to an ssh-ident binary. For instance, you can create a symlink from ssh to ssh-ident in `~/.local/bin`, and then add that path to the Emacs environment PATH variable:
 
 ```console
 ln -s /path/to/ssh-ident ~/.local/bin/ssh
