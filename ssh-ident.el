@@ -65,7 +65,7 @@ this dirty hack. (Please push improvements if you know it!)"
              (while (eq (process-status proc) 'run)
                (accept-process-output proc))
              (if (process-get proc :user-quit)
-                 0 ;; Quitting is not an error.
+                 0 ; Quitting is not an error.
                (process-exit-status proc)))))
       (unless (eq 0 exit-status)
         (lwarn 'ssh-ident :error
