@@ -47,10 +47,9 @@ Adapted from Magit's SSH Agency package
     (quit (kill-process proc)
           (process-put proc :user-quit t))))
 
-(defun ssh-ident-grab-passphrase ()
-  "Trigger an `ssh-ident' process to grab the appropriate SSH
-keys' passphrases by trying to fetch all repositories in the
-current git repo.
+(defun ssh-ident-grab-passphrase-git ()
+  "Trigger an `ssh-ident' process to grab the appropriate SSH keys'
+passphrases of a Git repository by trying to fetch all remotes.
 
 Ideally we would wrap the actual Magit command that the user
 performed and apply the ssh-ident filter there, but since I did
@@ -60,7 +59,7 @@ this dirty hack. (Please push improvements if you know it!)"
     (let ((exit-status
            (let* ((process-connection-type t) ; pty needed for filter.
                   (proc (apply #'start-process "git-fetch-process"
-                               (current-buffer) "git" '("fetch" "--all"))))
+                               (current-buffer) "git" '("fetch" "--dry-run" "--all"))))
              (setf (process-filter proc) #'ssh-ident-askpass-filter)
              (while (eq (process-status proc) 'run)
                (accept-process-output proc))
@@ -73,6 +72,6 @@ this dirty hack. (Please push improvements if you know it!)"
                failed with status %d: %s" exit-status (buffer-string))))))
 
 ;;;###autoload
-(add-hook 'magit-credential-hook 'ssh-ident-grab-passphrase)
+(add-hook 'magit-credential-hook 'ssh-ident-grab-passphrase-git)
 
 (provide 'ssh-ident)
